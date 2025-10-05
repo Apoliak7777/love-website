@@ -87,6 +87,8 @@ A romantic, minimalist webpage showing in real time how long **Alex & Vivien** h
 
 (…English sections mirror Slovak ones above…)
 
+<img width="945" height="522" alt="image" src="https://github.com/user-attachments/assets/a4948c72-e119-474a-9b82-9450e5bc7423" />
+
 ---
 
 S láskou vytvorené.  
