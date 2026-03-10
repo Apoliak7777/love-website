@@ -1,0 +1,135 @@
+/* Základné nastavenia a farby */
+:root {
+    --primary-color: #ff4d6d;
+    --text-color: #590d22;
+    --bg-gradient-start: #ffdde1;
+    --bg-gradient-end: #ee9ca7;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+    overflow: hidden; /* Zabraňuje "utekaniu" srdiečok mimo obrazovku */
+}
+
+/* Plávajúce srdiečka na pozadí */
+.bg-heart {
+    position: absolute;
+    color: rgba(255, 77, 109, 0.3);
+    user-select: none;
+    z-index: 0;
+    bottom: -50px;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+/* Hlavný sklenený kontajner (Glassmorphism) */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 450px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 40px 25px;
+    box-shadow: 0 15px 35px rgba(229, 57, 53, 0.15);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Animované hlavné srdce */
+.main-heart {
+    font-size: 5rem;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(229, 57, 53, 0.4));
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+/* Nadpisy a mená */
+h1 {
+    font-family: 'Sacramento', cursive;
+    font-size: 3.5rem;
+    margin: 0;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+}
+
+.names {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    margin-top: -5px;
+}
+
+/* Box pre samotné počítadlo */
+.counter-box {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 20px 15px;
+    margin-bottom: 30px;
+    box-shadow: inset 0 2px 10px rgba(255,255,255,0.5);
+}
+
+.counter-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #880e4f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#counter {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Citát a pätička */
+.quote {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: #880e4f;
+}
+
+.footer-info {
+    font-size: 0.9rem;
+    color: #ad1457;
+    border-top: 1px solid rgba(255, 77, 109, 0.3);
+    padding-top: 20px;
+}
+
+.signature {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.2rem;
+    display: block;
+    margin-top: 10px;
+    color: var(--primary-color);
+}
