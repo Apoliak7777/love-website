@@ -1,135 +1,485 @@
-/* Základné nastavenia a farby */
+/* =====================================================================
+   Navždy spolu — Love Countdown
+   Prémiový redizajn: luxusné farby, jemný glassmorfizmus, plynulé animácie.
+   Pre: Vivien 💕  /  Od: Alex
+   ===================================================================== */
+
+/* ---------- Premenné a farby ---------- */
 :root {
-    --primary-color: #ff4d6d;
-    --text-color: #590d22;
-    --bg-gradient-start: #ffdde1;
-    --bg-gradient-end: #ee9ca7;
+    /* Tmavý luxusný podklad */
+    --bg-dark: #1a0510;
+    --bg-wine: #38081f;
+    --bg-rose: #611030;
+    
+    /* Ružové a svetlé akcenty */
+    --accent-glow: #ff4d6d;
+    --accent-light: #ffb3c1;
+    --text-main: #fdf0f3;
+    --text-muted: #ffc2d1;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-bg-hover: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 179, 193, 0.15);
+    --glass-border-hover: rgba(255, 179, 193, 0.4);
+    --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    --glow-shadow: 0 0 30px rgba(255, 77, 109, 0.2);
+
+    /* Fonty */
+    --font-script: 'Sacramento', cursive;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Lora', serif;
+
+    --ease: cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    font-family: var(--font-body);
+    color: var(--text-main);
+    background-color: var(--bg-dark);
+    /* Luxusný ambientný prechod v pozadí */
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(97, 16, 48, 0.4), transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(255, 77, 109, 0.15), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(56, 8, 31, 0.8), transparent 50%);
+    overflow-x: hidden;
+}
+
+/* Plátno so svetielkami / srdiečkami */
+#hearts-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+/* Obsah nad pozadím */
+.hero, main, .footer, .intro { position: relative; z-index: 2; }
+
+/* =====================================================================
+   ÚVODNÁ ANIMÁCIA
+   ===================================================================== */
+.intro {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-color);
-    overflow: hidden; /* Zabraňuje "utekaniu" srdiečok mimo obrazovku */
+    background: var(--bg-dark);
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+.intro.hide { opacity: 0; visibility: hidden; }
+
+.intro-inner { text-align: center; }
+
+.glowing-heart-container {
+    filter: drop-shadow(0 0 40px rgba(255, 77, 109, 0.6));
+    animation: pulseGlow 2s infinite alternate ease-in-out;
 }
 
-/* Plávajúce srdiečka na pozadí */
-.bg-heart {
-    position: absolute;
-    color: rgba(255, 77, 109, 0.3);
-    user-select: none;
-    z-index: 0;
-    bottom: -50px;
-    animation: floatUp linear forwards;
+.intro-heart {
+    width: 100px;
+    height: 94px;
+    fill: var(--accent-light);
+    animation: beat 1.5s var(--ease) infinite;
 }
 
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+.intro-text {
+    margin-top: 24px;
+    font-family: var(--font-script);
+    font-size: 3rem;
+    color: var(--accent-light);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
 }
 
-/* Hlavný sklenený kontajner (Glassmorphism) */
-.container {
-    position: relative;
-    z-index: 10;
-    width: 90%;
-    max-width: 450px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    padding: 40px 25px;
-    box-shadow: 0 15px 35px rgba(229, 57, 53, 0.15);
+/* =====================================================================
+   HERO
+   ===================================================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    box-sizing: border-box;
+    padding: 24px;
 }
 
-/* Animované hlavné srdce */
-.main-heart {
-    font-size: 5rem;
-    margin-bottom: 10px;
-    display: inline-block;
-    animation: heartbeat 1.5s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(229, 57, 53, 0.4));
+.hero-content {
+    animation: fadeUp 1.2s ease 0.2s both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    15% { transform: scale(1.15); }
-    30% { transform: scale(1); }
-    45% { transform: scale(1.15); }
-    60% { transform: scale(1); }
-}
-
-/* Nadpisy a mená */
-h1 {
-    font-family: 'Sacramento', cursive;
-    font-size: 3.5rem;
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    font-weight: 500;
+    line-height: 1.1;
     margin: 0;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    color: #ffffff;
+    letter-spacing: -1px;
+}
+.hero-title .amp {
+    font-family: var(--font-script);
+    font-size: 1.2em;
+    color: var(--accent-glow);
+    font-weight: normal;
+    padding: 0 10px;
 }
 
-.names {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    margin-top: -5px;
-}
-
-/* Box pre samotné počítadlo */
-.counter-box {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 20px;
-    padding: 20px 15px;
-    margin-bottom: 30px;
-    box-shadow: inset 0 2px 10px rgba(255,255,255,0.5);
-}
-
-.counter-title {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    display: block;
-    color: #880e4f;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#counter {
-    font-size: 1.25rem;
-    line-height: 1.6;
-    font-weight: 400;
-}
-
-/* Citát a pätička */
-.quote {
+.hero-subtitle {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
     font-style: italic;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 30px;
-    color: #880e4f;
+    color: var(--text-muted);
+    margin: 20px 0 0;
+    letter-spacing: 1px;
 }
 
-.footer-info {
-    font-size: 0.9rem;
-    color: #ad1457;
-    border-top: 1px solid rgba(255, 77, 109, 0.3);
-    padding-top: 20px;
+/* Scroll indikátor */
+.scroll-cue {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 80px;
+    margin-top: 60px;
+    text-decoration: none;
+    color: var(--accent-light);
+    border: 1px solid rgba(255, 179, 193, 0.3);
+    border-radius: 30px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+.scroll-cue:hover {
+    opacity: 1;
+    background: rgba(255, 179, 193, 0.1);
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.2);
+}
+.scroll-arrow {
+    font-size: 1.5rem;
+    animation: bob 2s ease-in-out infinite;
 }
 
-.signature {
-    font-family: 'Sacramento', cursive;
-    font-size: 2.2rem;
+/* =====================================================================
+   SEKCIE — spoločné
+   ===================================================================== */
+.section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 24px;
+    text-align: center;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0 0 10px;
+    line-height: 1.2;
+}
+
+.section-desc {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 50px;
+    font-style: italic;
+}
+
+/* Odhalenie pri scrollovaní */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* =====================================================================
+   POČÍTADLO
+   ===================================================================== */
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.counter-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 30px 15px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+/* jemný highlight na vrchu karty */
+.counter-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+.counter-card:hover {
+    transform: translateY(-8px);
+    background: var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--glow-shadow), var(--glass-shadow);
+}
+
+.counter-num {
     display: block;
-    margin-top: 10px;
-    color: var(--primary-color);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: clamp(2.6rem, 8vw, 4rem);
+    line-height: 1;
+    color: var(--accent-light);
+    text-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+    font-variant-numeric: tabular-nums;
+}
+.counter-num.tick { animation: pop 0.5s var(--ease); }
+
+.counter-label {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+.since {
+    margin-top: 50px;
+    font-size: 1.25rem;
+    color: var(--text-muted);
+}
+.since .highlight { 
+    color: var(--accent-light); 
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* =====================================================================
+   ODKAZ PRE ŇU
+   ===================================================================== */
+.message-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 32px;
+    padding: 60px 40px;
+    box-shadow: var(--glass-shadow);
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+.quote-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--accent-glow);
+    opacity: 0.5;
+    margin-bottom: 20px;
+}
+.love-letter {
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    line-height: 1.8;
+    color: var(--text-main);
+    margin: 0 auto;
+}
+.signature {
+    display: block;
+    margin-top: 40px;
+    font-family: var(--font-script);
+    font-size: 3rem;
+    color: var(--accent-light);
+    text-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+}
+
+/* =====================================================================
+   GALÉRIA / FOTKY
+   ===================================================================== */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.photo-card {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.5s var(--ease);
+}
+.photo-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 50%);
+    opacity: 0.6;
+    transition: opacity 0.5s ease;
+}
+.photo-card:hover { 
+    transform: scale(1.05) translateY(-10px); 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 20px rgba(255,77,109,0.3);
+    z-index: 10;
+    border-color: var(--glass-border-hover);
+}
+.photo-card:hover::after {
+    opacity: 0.2;
+}
+.photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s var(--ease);
+}
+.photo-card:hover img {
+    transform: scale(1.1);
+}
+
+/* =====================================================================
+   CITÁTY
+   ===================================================================== */
+.quotes { 
+    padding: 80px 24px;
+}
+.quote-text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+    line-height: 1.5;
+    color: var(--accent-light);
+    min-height: 4em;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    max-width: 25ch;
+    margin: 0 auto;
+}
+.quote-text.fade { 
+    opacity: 0; 
+    transform: scale(0.95);
+}
+
+/* =====================================================================
+   PÄTIČKA
+   ===================================================================== */
+.footer {
+    text-align: center;
+    padding: 80px 24px 100px;
+    color: var(--text-muted);
+}
+.footer-heart {
+    color: var(--accent-glow);
+    animation: beat 1.5s var(--ease) infinite;
+    display: inline-block;
+}
+.footer p {
+    font-size: 1.2rem;
+    margin: 20px 0 0;
+}
+.footer-sign { font-size: 2.5rem; margin-top: 10px; }
+
+/* malý tip "klikni kdekoľvek" */
+.tap-hint {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 30;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    box-shadow: var(--glow-shadow);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.tap-hint.hide { 
+    opacity: 0; 
+    transform: translateX(-50%) translateY(20px);
+}
+
+/* =====================================================================
+   KEYFRAMES
+   ===================================================================== */
+@keyframes beat {
+    0%, 100% { transform: scale(1); }
+    15%      { transform: scale(1.15); }
+    30%      { transform: scale(1); }
+    45%      { transform: scale(1.2); }
+    60%      { transform: scale(1); }
+}
+@keyframes pulseGlow {
+    0% { filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4)); }
+    100% { filter: drop-shadow(0 0 50px rgba(255, 77, 109, 0.8)); }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(12px); }
+}
+@keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.1); color: #ffffff; text-shadow: 0 0 30px #ffffff; }
+    100% { transform: scale(1); }
+}
+
+/* =====================================================================
+   RESPONZÍVNOSŤ
+   ===================================================================== */
+@media (max-width: 768px) {
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .message-card { padding: 40px 20px; }
+}
+@media (max-width: 560px) {
+    .counter-grid { gap: 12px; }
+    .counter-card { padding: 20px 8px; border-radius: 18px; }
+    .section { padding: 70px 18px; }
+    .scroll-cue { margin-top: 40px; }
+}
+
+/* =====================================================================
+   PRÍSTUPNOSŤ
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1; transform: none; }
 }
