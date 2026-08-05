@@ -363,6 +363,96 @@ body {
     transform: scale(1.1);
 }
 
+/* Popisky pod fotkami - ležia na gradiente z .photo-card::after */
+.photo-card figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 18px 18px 16px;
+    font-family: var(--font-script);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--text-main);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+    opacity: 0.85;
+    transform: translateY(4px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.photo-card:hover figcaption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Textová karta medzi fotkami */
+.photo-card--note {
+    display: grid;
+    place-items: center;
+    padding: 28px 22px;
+    text-align: center;
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(255, 77, 109, 0.16), transparent 65%),
+        var(--glass-bg);
+    border-color: var(--glass-border);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.photo-card--note::after {
+    /* tmavý gradient pre fotky tu nemá čo robiť */
+    display: none;
+}
+.photo-card--note:hover {
+    transform: scale(1.03) translateY(-6px);
+    border-color: var(--glass-border-hover);
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(255, 77, 109, 0.24), transparent 65%),
+        var(--glass-bg-hover);
+}
+.note {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.note-heart {
+    width: 26px;
+    height: 26px;
+    fill: var(--accent-glow);
+    filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.55));
+    animation: note-beat 2.6s var(--ease) infinite;
+}
+@keyframes note-beat {
+    0%, 100% { transform: scale(1); }
+    12%      { transform: scale(1.18); }
+    24%      { transform: scale(1); }
+    36%      { transform: scale(1.1); }
+    48%      { transform: scale(1); }
+}
+.note-text {
+    margin: 4px 0 0;
+    font-family: var(--font-heading);
+    font-size: 1.28rem;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--text-main);
+}
+.note-sub {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+.note-sign {
+    margin-top: 6px;
+    font-family: var(--font-script);
+    font-size: 1.35rem;
+    color: var(--accent-light);
+    opacity: 0.85;
+}
+
 /* =====================================================================
    CITÁTY
    ===================================================================== */
@@ -463,12 +553,26 @@ body {
 @media (max-width: 768px) {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
     .message-card { padding: 40px 20px; }
+
+    /* V dvojstĺpci je karta priúzka - nech si vezme celý riadok
+       a výšku podľa textu, inak by sa text orezal. */
+    .photo-card--note {
+        grid-column: 1 / -1;
+        aspect-ratio: auto;
+        padding: 30px 22px;
+    }
 }
 @media (max-width: 560px) {
     .counter-grid { gap: 12px; }
     .counter-card { padding: 20px 8px; border-radius: 18px; }
     .section { padding: 70px 18px; }
     .scroll-cue { margin-top: 40px; }
+
+    .photo-card figcaption { font-size: 1.25rem; padding: 14px 14px 12px; }
+    .photo-card--note { padding: 20px 14px; }
+    .note-text { font-size: 1.05rem; }
+    .note-sub { font-size: 0.85rem; }
+    .note-sign { font-size: 1.15rem; }
 }
 
 /* =====================================================================

@@ -109,7 +109,7 @@ const CONFIG = {
 | Mená a nadpisy | `index.html` — `.hero-title` | Text `Alex & Vivien` |
 | Dátum v texte „Naša cesta začala…" | `index.html` — `.since` | **Nie je** naviazaný na `CONFIG.startDate`, treba upraviť ručne |
 | Osobný odkaz a podpis | `index.html` — `.love-letter`, `.signature` | |
-| Fotky | `index.html` — `.photo-grid` | Aktuálne placeholder fotky z Unsplash |
+| Fotky | `index.html` — `.photo-grid` | 5 placeholder fotiek z Unsplash + 1 textová karta |
 | Farby a fonty | `:root` v `style.css` | CSS premenné na jednom mieste |
 | Doména | `CNAME` | |
 
@@ -143,7 +143,10 @@ Keďže ide o čisto statické súbory, rovnako dobre funguje Vercel, Netlify aj
 
 ## ⚠️ Dobré vedieť
 
-> **Fotky v galérii sú placeholdery.** Šesť obrázkov sa načítava z Unsplash cez externé URL — stránka teda pri prvom načítaní ťahá dáta z cudzieho servera. Nahraď ich vlastnými fotkami, keď budeš chcieť.
+> **Fotky v galérii sú placeholdery.** Päť obrázkov sa načítava z Unsplash cez externé URL —
+> stránka teda pri prvom načítaní ťahá dáta z cudzieho servera. Nahraď ich vlastnými fotkami,
+> keď budeš chcieť. Šiestu dlaždicu tvorí textová karta (`.photo-card--note`); ak na jej miesto
+> dáš fotku, stačí `<figure class="photo-card">` s `<img>` a `<figcaption>` ako pri ostatných.
 
 > **Dátum v texte je duplikovaný.** Veta „Naša cesta začala 25. januára 2025 o 19:00" je natvrdo v `index.html`. Ak zmeníš `CONFIG.startDate`, uprav aj ju, inak si stránka bude protirečiť.
 

@@ -109,7 +109,7 @@ const CONFIG = {
 | Names and headings | `index.html` — `.hero-title` | The text `Alex & Vivien` |
 | The date in the "Naša cesta začala…" line | `index.html` — `.since` | **Not** tied to `CONFIG.startDate`, has to be edited by hand |
 | Personal message and signature | `index.html` — `.love-letter`, `.signature` | |
-| Photos | `index.html` — `.photo-grid` | Currently placeholder photos from Unsplash |
+| Photos | `index.html` — `.photo-grid` | 5 placeholder photos from Unsplash + 1 text card |
 | Colors and fonts | `:root` in `style.css` | CSS variables all in one place |
 | Domain | `CNAME` | |
 
@@ -143,7 +143,11 @@ Since these are purely static files, Vercel, Netlify and Cloudflare Pages work j
 
 ## ⚠️ Good to know
 
-> **The gallery photos are placeholders.** Six images are loaded from Unsplash via external URLs — so on first load the page pulls data from a third-party server. Replace them with your own photos whenever you like.
+> **The gallery photos are placeholders.** Five images are loaded from Unsplash via external
+> URLs — so on first load the page pulls data from a third-party server. Replace them with your
+> own photos whenever you like. The sixth tile is a text card (`.photo-card--note`); to put a
+> photo there instead, use `<figure class="photo-card">` with an `<img>` and a `<figcaption>`
+> like the others.
 
 > **The date is duplicated in the text.** The sentence "Naša cesta začala 25. januára 2025 o 19:00" is hardcoded in `index.html`. If you change `CONFIG.startDate`, update that line too, otherwise the page will contradict itself.
 
