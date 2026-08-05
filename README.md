@@ -40,7 +40,7 @@
 
 Statická webová stránka — jeden `index.html`, jeden `style.css`, jeden `script.js`. Žiadny build, žiadny framework, žiadny package manager. Otvoríš ju v prehliadači a hneď beží.
 
-Stránka odpočítava (presnejšie: **na**počítava) čas od `25. januára 2025, 19:00` v rokoch, mesiacoch, dňoch, hodinách, minútach a sekundách — a robí to so slovenským skloňovaním, takže sa naozaj zobrazí *1 rok*, *2 roky*, *5 rokov*. Okrem počítadla obsahuje úvodnú animáciu s tlčúcim srdcom, osobný odkaz, galériu, rotujúce citáty a canvas particle systém, ktorý pri kliknutí vystrelí salvu žiariacich svetielok.
+Stránka odpočítava (presnejšie: **na**počítava) čas od `25. januára 2025, 19:00` v rokoch, mesiacoch, dňoch, hodinách, minútach a sekundách — a robí to so slovenským skloňovaním, takže sa naozaj zobrazí *1 rok*, *2 roky*, *5 rokov*. Okrem počítadla obsahuje úvodnú animáciu s tlčúcim srdcom, osobný odkaz, míľniky, rotujúce citáty a canvas particle systém, ktorý pri kliknutí vystrelí salvu žiariacich svetielok.
 
 > Táto verzia je kompletný redizajn oproti pôvodnej — tmavý „luxusný" podklad, glassmorfizmus, serifové fonty z Google Fonts.
 
@@ -50,10 +50,12 @@ Stránka odpočítava (presnejšie: **na**počítava) čas od `25. januára 2025
 - 🇸🇰 **Slovenské skloňovanie** — funkcia `declension()` vyberá tvar podľa hodnoty (1 / 2–4 / 5+), takže popisky pod číslami sedia gramaticky.
 - 🎇 **Canvas particles** — ambientné stúpajúce svetielka (nové sa prestanú pridávať nad 120 časticami) plus salva 20–34 častíc pri každom kliknutí alebo dotyku.
 - 💌 **Úvodná animácia** — svietiace tlčúce srdce s textom „Náš príbeh…", zmizne po 3,2 s alebo po kliknutí.
+- 🎯 **Míľniky** — sekcia „Na čo sa tešíme" sama dopočíta najbližšiu okrúhlu stovku dní, mesačné výročie a výročie; ten najbližší sa zvýrazní. Počíta sa z `CONFIG.startDate`, netreba nič dopĺňať ručne.
+- 🔗 **Náhľad pri zdieľaní** — Open Graph a Twitter značky plus `og-image.png` (1200×630), takže odkaz poslaný v správe ukáže peknú kartu namiesto holého linku.
 - 💬 **Rotujúce citáty** — päť citátov sa strieda každých 7 sekúnd s plynulým prelínaním.
 - 🪞 **Glassmorfizmus** — karty počítadla a odkazu majú `backdrop-filter: blur(20px)`, jemné okraje a glow tieň pri hoveri.
 - 📜 **Scroll reveal + parallax** — sekcie sa odhaľujú cez `IntersectionObserver`, hero sa pri scrollovaní posúva a stráca.
-- 📱 **Responzívny layout** — počítadlo je vždy 3 stĺpce, galéria sa z 3 stĺpcov zmenší na 2 pod 768 px.
+- 📱 **Responzívny layout** — počítadlo je vždy 3 stĺpce, míľniky sa pod 560 px poskladajú pod seba.
 - ♿ **Rešpektuje `prefers-reduced-motion`** — CSS animácie a prechody sa skrátia na nulu a ambientné častice sa vôbec nespustia; salva pri kliknutí zostáva aktívna.
 
 ## 🚀 Rýchly štart
@@ -79,10 +81,11 @@ Potom otvor `http://localhost:5173`.
 
 ```text
 love-website/
-├─ index.html    # celá štruktúra stránky: intro, hero, počítadlo, odkaz, galéria, citáty, pätička
+├─ index.html    # celá štruktúra: intro, hero, počítadlo, míľniky, odkaz, momenty, citáty, pätička
 ├─ style.css     # CSS premenné, glassmorfizmus, keyframes, responzívnosť, reduced-motion
-├─ script.js     # CONFIG (dátum + citáty), počítadlo, skloňovanie, scroll efekty, canvas particles
-├─ CNAME         # vlastná doména pre GitHub Pages
+├─ script.js     # CONFIG (dátum + citáty), počítadlo, míľniky, scroll efekty, canvas particles
+├─ favicon.svg   # ikonka do záložky prehliadača
+├─ og-image.png  # náhľad pri zdieľaní odkazu (1200×630)
 ├─ README.md     # táto dokumentácia (slovensky)
 ├─ README.en.md  # dokumentácia po anglicky
 └─ LICENSE       # GNU GPL v3
@@ -109,9 +112,10 @@ const CONFIG = {
 | Mená a nadpisy | `index.html` — `.hero-title` | Text `Alex & Vivien` |
 | Dátum v texte „Naša cesta začala…" | `index.html` — `.since` | **Nie je** naviazaný na `CONFIG.startDate`, treba upraviť ručne |
 | Osobný odkaz a podpis | `index.html` — `.love-letter`, `.signature` | |
-| Fotky | `index.html` — `.photo-grid` | 5 placeholder fotiek z Unsplash + 1 textová karta |
+| Text v sekcii Naše momenty | `index.html` — `.moment-card` | |
+| Míľniky | nič netreba | Dopočítavajú sa samé z `CONFIG.startDate` |
+| Náhľad pri zdieľaní | `og-image.png` + `og:` značky v `index.html` | Pri zmene domény prepíš absolútne URL |
 | Farby a fonty | `:root` v `style.css` | CSS premenné na jednom mieste |
-| Doména | `CNAME` | |
 
 ## 🎨 Dizajn a farby
 
@@ -143,10 +147,10 @@ Keďže ide o čisto statické súbory, rovnako dobre funguje Vercel, Netlify aj
 
 ## ⚠️ Dobré vedieť
 
-> **Fotky v galérii sú placeholdery.** Päť obrázkov sa načítava z Unsplash cez externé URL —
-> stránka teda pri prvom načítaní ťahá dáta z cudzieho servera. Nahraď ich vlastnými fotkami,
-> keď budeš chcieť. Šiestu dlaždicu tvorí textová karta (`.photo-card--note`); ak na jej miesto
-> dáš fotku, stačí `<figure class="photo-card">` s `<img>` a `<figcaption>` ako pri ostatných.
+> **Stránka neobsahuje žiadne fotky.** Sekcia „Naše momenty" je zámerne len text —
+> žiadne cudzie stock fotky. Keď budeš chcieť pridať vaše vlastné, vlož do tej sekcie
+> `.photo-grid` s `<figure class="photo-card"><img ...></figure>`; v `index.html` je
+> na tom mieste poznámka.
 
 > **Dátum v texte je duplikovaný.** Veta „Naša cesta začala 25. januára 2025 o 19:00" je natvrdo v `index.html`. Ak zmeníš `CONFIG.startDate`, uprav aj ju, inak si stránka bude protirečiť.
 

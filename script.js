@@ -85,6 +85,87 @@ updateCounter();
 setInterval(updateCounter, 1000);
 
 /* =====================================================================
+   1b) MÍĽNIKY
+   Všetko sa počíta z CONFIG.startDate — netreba nič dopĺňať ručne.
+   ===================================================================== */
+(function milestones() {
+    const grid = document.getElementById('milestone-grid');
+    if (!grid) return;
+
+    const MONTHS = ['januára', 'februára', 'marca', 'apríla', 'mája', 'júna',
+                    'júla', 'augusta', 'septembra', 'októbra', 'novembra', 'decembra'];
+
+    const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const DAY = 86400000;
+    const start = CONFIG.startDate;
+    const today = startOfDay(new Date());
+    const daysTogether = Math.floor((today - startOfDay(start)) / DAY);
+
+    const formatDate = (d) => `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+
+    // o koľko dní — s korektným skloňovaním
+    function inDays(n) {
+        if (n === 0) return 'dnes';
+        if (n === 1) return 'zajtra';
+        return 'o ' + n + ' ' + declension(n, 'deň', 'dni', 'dní');
+    }
+
+    const items = [];
+
+    // 1) Najbližšia okrúhla stovka dní
+    const nextHundred = (Math.floor(daysTogether / 100) + 1) * 100;
+    const hundredDate = new Date(startOfDay(start).getTime() + nextHundred * DAY);
+    items.push({
+        big: nextHundred.toLocaleString('sk-SK'),
+        unit: declension(nextHundred, 'deň', 'dni', 'dní') + ' spolu',
+        date: formatDate(hundredDate),
+        left: Math.round((hundredDate - today) / DAY)
+    });
+
+    // 2) Najbližšie mesačné výročie
+    let monthly = new Date(today.getFullYear(), today.getMonth(), start.getDate());
+    if (monthly <= today) monthly = new Date(today.getFullYear(), today.getMonth() + 1, start.getDate());
+    const monthsCount = (monthly.getFullYear() - start.getFullYear()) * 12
+                      + (monthly.getMonth() - start.getMonth());
+    items.push({
+        big: String(monthsCount),
+        unit: declension(monthsCount, 'mesiac', 'mesiace', 'mesiacov') + ' spolu',
+        date: formatDate(monthly),
+        left: Math.round((monthly - today) / DAY)
+    });
+
+    // 3) Najbližšie výročie
+    let yearly = new Date(today.getFullYear(), start.getMonth(), start.getDate());
+    if (yearly <= today) yearly = new Date(today.getFullYear() + 1, start.getMonth(), start.getDate());
+    const yearsCount = yearly.getFullYear() - start.getFullYear();
+    items.push({
+        big: String(yearsCount),
+        unit: declension(yearsCount, 'rok', 'roky', 'rokov') + ' spolu',
+        date: formatDate(yearly),
+        left: Math.round((yearly - today) / DAY)
+    });
+
+    // najbližší míľnik zvýrazníme
+    const soonest = Math.min(...items.map(i => i.left));
+
+    grid.innerHTML = '';
+    items.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'milestone-card' + (item.left === soonest ? ' is-next' : '');
+        card.innerHTML =
+            '<span class="milestone-big"></span>' +
+            '<span class="milestone-unit"></span>' +
+            '<span class="milestone-date"></span>' +
+            '<span class="milestone-left"></span>';
+        card.querySelector('.milestone-big').textContent = item.big;
+        card.querySelector('.milestone-unit').textContent = item.unit;
+        card.querySelector('.milestone-date').textContent = item.date;
+        card.querySelector('.milestone-left').textContent = inDays(item.left);
+        grid.appendChild(card);
+    });
+})();
+
+/* =====================================================================
    2) CITÁTY
    ===================================================================== */
 (function rotatingQuotes() {

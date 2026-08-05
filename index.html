@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex ❤️ Vivien — Navždy spolu</title>
     <meta name="description" content="Náš spoločný príbeh. Počítame každú krásnu chvíľu od začiatku nášho vzťahu.">
+    <meta name="theme-color" content="#1a0510">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://apoliak7777.github.io/love-website/">
+
+    <!-- ===== Náhľad pri zdieľaní odkazu ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sk_SK">
+    <meta property="og:site_name" content="Navždy spolu">
+    <meta property="og:title" content="Alex ❤️ Vivien — Navždy spolu">
+    <meta property="og:description" content="Každá sekunda s tebou je výnimočná. Počítame každú krásnu chvíľu od začiatku nášho príbehu.">
+    <meta property="og:url" content="https://apoliak7777.github.io/love-website/">
+    <meta property="og:image" content="https://apoliak7777.github.io/love-website/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Alex & Vivien — navždy spolu">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alex ❤️ Vivien — Navždy spolu">
+    <meta name="twitter:description" content="Každá sekunda s tebou je výnimočná.">
+    <meta name="twitter:image" content="https://apoliak7777.github.io/love-website/og-image.png">
 
     <!-- ===== Fonty ===== -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,6 +79,16 @@
             <p class="since">Naša cesta začala <span class="highlight">25. januára 2025</span> o <span class="highlight">19:00</span></p>
         </section>
 
+        <!-- ===== MÍĽNIKY ===== -->
+        <section class="section milestones reveal">
+            <h2 class="section-title">Na čo sa tešíme</h2>
+            <p class="section-desc">Najbližšie chvíle, ktoré si pripomenieme.</p>
+
+            <div class="milestone-grid" id="milestone-grid">
+                <!-- dopĺňa script.js -->
+            </div>
+        </section>
+
         <!-- ===== ODKAZ PRE ŇU ===== -->
         <section class="section message reveal">
             <div class="message-card">
@@ -75,43 +104,22 @@
             </div>
         </section>
 
-        <!-- ===== MIESTO NA FOTKY ===== -->
-        <section class="section gallery reveal">
+        <!-- ===== NAŠE MOMENTY =====
+             Zatiaľ bez fotiek — sú tu len vlastné slová.
+             Keď budeš chcieť pridať vaše fotky, vlož sem .photo-grid
+             s <figure class="photo-card"><img ...></figure>. -->
+        <section class="section moments reveal">
             <h2 class="section-title">Naše momenty</h2>
             <p class="section-desc">Krásne spomienky, ktoré si navždy uchováme.</p>
-            
-            <div class="photo-grid">
-                <figure class="photo-card photo-card--note">
-                    <blockquote class="note">
-                        <svg class="note-heart" viewBox="0 0 32 29.6" aria-hidden="true">
-                            <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-                        </svg>
-                        <p class="note-text">Najkrajšie chvíle nie sú na fotkách.</p>
-                        <p class="note-sub">Sú to tie, pri ktorých som zabudol fotiť.</p>
-                        <span class="note-sign">a takých máme najviac</span>
-                    </blockquote>
-                </figure>
-                <figure class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Dve stoličky ozdobené kvetmi na lúke" loading="lazy">
-                    <figcaption>Kde sa všetko začalo</figcaption>
-                </figure>
-                <figure class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?auto=format&fit=crop&w=600&q=80" alt="Dvojica na bicykloch pri západe slnka" loading="lazy">
-                    <figcaption>Naše západy slnka</figcaption>
-                </figure>
-                <figure class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1501901609772-df0848060b33?auto=format&fit=crop&w=600&q=80" alt="Smejúca sa dvojica v objatí" loading="lazy">
-                    <figcaption>Tvoj smiech</figcaption>
-                </figure>
-                <figure class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?auto=format&fit=crop&w=600&q=80" alt="Postava s bicyklom na vrchole kopca" loading="lazy">
-                    <figcaption>Každý vrchol spolu</figcaption>
-                </figure>
-                <figure class="photo-card">
-                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80" alt="Zdvihnuté ruky proti večernej oblohe" loading="lazy">
-                    <figcaption>A ešte veľa takých</figcaption>
-                </figure>
-            </div>
+
+            <blockquote class="moment-card">
+                <svg class="note-heart" viewBox="0 0 32 29.6" aria-hidden="true">
+                    <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+                </svg>
+                <p class="note-text">Najkrajšie chvíle nie sú na fotkách.</p>
+                <p class="note-sub">Sú to tie, pri ktorých som zabudol fotiť.</p>
+                <span class="note-sign">a takých máme najviac</span>
+            </blockquote>
         </section>
         
         <!-- ===== STRIEDAJÚCE SA CITÁTY ===== -->

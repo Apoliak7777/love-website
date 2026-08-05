@@ -40,7 +40,7 @@
 
 A static website — one `index.html`, one `style.css`, one `script.js`. No build, no framework, no package manager. Open it in a browser and it runs straight away.
 
-The page counts down (more precisely: counts **up**) the time since `25 January 2025, 19:00` in years, months, days, hours, minutes and seconds — and it does so with Slovak grammatical inflection, so it really does display *1 rok*, *2 roky*, *5 rokov*. Besides the counter it features an intro animation with a beating heart, a personal message, a gallery, rotating quotes and a canvas particle system that fires off a burst of glowing lights on click.
+The page counts down (more precisely: counts **up**) the time since `25 January 2025, 19:00` in years, months, days, hours, minutes and seconds — and it does so with Slovak grammatical inflection, so it really does display *1 rok*, *2 roky*, *5 rokov*. Besides the counter it features an intro animation with a beating heart, a personal message, milestones, rotating quotes and a canvas particle system that fires off a burst of glowing lights on click.
 
 > This version is a complete redesign of the original — a dark "luxury" backdrop, glassmorphism, serif fonts from Google Fonts.
 
@@ -50,10 +50,12 @@ The page counts down (more precisely: counts **up**) the time since `25 January 
 - 🇸🇰 **Slovak inflection** — the `declension()` function picks the right word form based on the value (1 / 2–4 / 5+), so the labels under the numbers are grammatically correct.
 - 🎇 **Canvas particles** — ambient rising lights (new ones stop spawning above 120 particles) plus a burst of 20–34 particles on every click or touch.
 - 💌 **Intro animation** — a glowing beating heart with the text "Náš príbeh…", fading out after 3.2 s or on click.
+- 🎯 **Milestones** — the "What we're looking forward to" section works out the next round hundred days, the next monthly anniversary and the next yearly one on its own, and highlights whichever comes first. It is derived from `CONFIG.startDate`, so nothing has to be maintained by hand.
+- 🔗 **Link preview** — Open Graph and Twitter tags plus `og-image.png` (1200×630), so a link sent in a message shows a proper card instead of a bare URL.
 - 💬 **Rotating quotes** — five quotes alternate every 7 seconds with a smooth cross-fade.
 - 🪞 **Glassmorphism** — the counter and message cards use `backdrop-filter: blur(20px)`, subtle borders and a glow shadow on hover.
 - 📜 **Scroll reveal + parallax** — sections are revealed via `IntersectionObserver`, the hero shifts and fades as you scroll.
-- 📱 **Responsive layout** — the counter is always 3 columns, the gallery shrinks from 3 columns to 2 below 768 px.
+- 📱 **Responsive layout** — the counter is always 3 columns, the milestones stack below 560 px.
 - ♿ **Respects `prefers-reduced-motion`** — CSS animations and transitions are cut to zero and ambient particles never spawn; the click burst still fires.
 
 ## 🚀 Quick start
@@ -79,7 +81,7 @@ Then open `http://localhost:5173`.
 
 ```text
 love-website/
-├─ index.html    # the entire page structure: intro, hero, counter, message, gallery, quotes, footer
+├─ index.html    # page structure: intro, hero, counter, milestones, message, moments, quotes, footer
 ├─ style.css     # CSS variables, glassmorphism, keyframes, responsiveness, reduced-motion
 ├─ script.js     # CONFIG (date + quotes), counter, inflection, scroll effects, canvas particles
 ├─ CNAME         # custom domain for GitHub Pages
@@ -109,9 +111,10 @@ const CONFIG = {
 | Names and headings | `index.html` — `.hero-title` | The text `Alex & Vivien` |
 | The date in the "Naša cesta začala…" line | `index.html` — `.since` | **Not** tied to `CONFIG.startDate`, has to be edited by hand |
 | Personal message and signature | `index.html` — `.love-letter`, `.signature` | |
-| Photos | `index.html` — `.photo-grid` | 5 placeholder photos from Unsplash + 1 text card |
+| Text in the Our moments section | `index.html` — `.moment-card` | |
+| Milestones | nothing to do | Derived automatically from `CONFIG.startDate` |
+| Link preview | `og-image.png` + `og:` tags in `index.html` | Update the absolute URLs if the domain changes |
 | Colors and fonts | `:root` in `style.css` | CSS variables all in one place |
-| Domain | `CNAME` | |
 
 ## 🎨 Design and colors
 
@@ -143,11 +146,10 @@ Since these are purely static files, Vercel, Netlify and Cloudflare Pages work j
 
 ## ⚠️ Good to know
 
-> **The gallery photos are placeholders.** Five images are loaded from Unsplash via external
-> URLs — so on first load the page pulls data from a third-party server. Replace them with your
-> own photos whenever you like. The sixth tile is a text card (`.photo-card--note`); to put a
-> photo there instead, use `<figure class="photo-card">` with an `<img>` and a `<figcaption>`
-> like the others.
+> **The page contains no photos.** The "Our moments" section is deliberately text only —
+> no third-party stock imagery. To add your own later, drop a `.photo-grid` with
+> `<figure class="photo-card"><img ...></figure>` into that section; there is a note at
+> that spot in `index.html`.
 
 > **The date is duplicated in the text.** The sentence "Naša cesta začala 25. januára 2025 o 19:00" is hardcoded in `index.html`. If you change `CONFIG.startDate`, update that line too, otherwise the page will contradict itself.
 
