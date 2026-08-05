@@ -16,7 +16,7 @@
 ![Bez závislostí](https://img.shields.io/badge/z%C3%A1vislosti-%C5%BEiadne-ff4d6d?style=flat-square)
 ![Licencia](https://img.shields.io/badge/licencia-GPL--3.0-2ea043?style=flat-square)
 
-[🌐 laska.apoliak.online](https://laska.apoliak.online)
+[🌐 Živá stránka](https://apoliak7777.github.io/love-website/)
 
 </div>
 
@@ -129,11 +129,15 @@ Fonty (Google Fonts): **Playfair Display** (nadpisy a čísla), **Lora** (text),
 
 ## 🌍 Nasadenie
 
-Repozitár obsahuje `CNAME` s doménou `laska.apoliak.online`, čiže je pripravený na **GitHub Pages**:
+Stránka beží na **GitHub Pages** zo zdroja branch `main`, priečinok `/ (root)`:
 
-1. Settings → Pages → Source: branch `main`, priečinok `/ (root)`.
-2. V DNS nastav `CNAME` záznam pre subdoménu na `<username>.github.io`.
-3. Zapni *Enforce HTTPS*.
+<https://apoliak7777.github.io/love-website/>
+
+Ak k nej niekedy pripojíš vlastnú doménu:
+
+1. Pridaj do koreňa repozitára súbor `CNAME` s doménou na jednom riadku.
+2. V DNS nastav `CNAME` záznam pre subdoménu na `apoliak7777.github.io`.
+3. Po overení domény zapni *Enforce HTTPS*.
 
 Keďže ide o čisto statické súbory, rovnako dobre funguje Vercel, Netlify aj Cloudflare Pages — stačí prepojiť repo, žiadny build command ani output directory.
 

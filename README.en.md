@@ -16,7 +16,7 @@
 ![No dependencies](https://img.shields.io/badge/dependencies-none-ff4d6d?style=flat-square)
 ![License](https://img.shields.io/badge/license-GPL--3.0-2ea043?style=flat-square)
 
-[🌐 laska.apoliak.online](https://laska.apoliak.online)
+[🌐 Live site](https://apoliak7777.github.io/love-website/)
 
 </div>
 
@@ -129,11 +129,15 @@ Fonts (Google Fonts): **Playfair Display** (headings and numbers), **Lora** (bod
 
 ## 🌍 Deployment
 
-The repository contains a `CNAME` file with the domain `laska.apoliak.online`, so it is ready for **GitHub Pages**:
+The site runs on **GitHub Pages** from branch `main`, folder `/ (root)`:
 
-1. Settings → Pages → Source: branch `main`, folder `/ (root)`.
-2. In your DNS, point a `CNAME` record for the subdomain to `<username>.github.io`.
-3. Enable *Enforce HTTPS*.
+<https://apoliak7777.github.io/love-website/>
+
+If you ever attach a custom domain:
+
+1. Add a `CNAME` file to the repository root with the domain on a single line.
+2. In your DNS, point a `CNAME` record for the subdomain to `apoliak7777.github.io`.
+3. Enable *Enforce HTTPS* once the domain is verified.
 
 Since these are purely static files, Vercel, Netlify and Cloudflare Pages work just as well — just connect the repo, no build command and no output directory needed.
 
